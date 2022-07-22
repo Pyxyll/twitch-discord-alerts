@@ -6,10 +6,12 @@
 
     "use_embed": true,
 
+    "twitch_status": "https://decapi.me/twitch/status/YourChannelName",
+
     "non_embed_text": "@everyone",
 
     "embed_config": {
-        "title": "Stream Started!",
+        "title": "",
         "description": "A  new stream has been started, [click here to watch](https://twitch.tv/YourChannelName)!\n\n[https://twitch.tv/YourChannelName](https://twitch.tv/YourChannelName)",
         "color": "0x00FF00",
         "image": " https://static-cdn.jtvnw.net/previews-ttv/live_user_YourChannelName-1920x1080.jpg",
