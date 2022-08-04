@@ -9,10 +9,25 @@ const config = JSON.parse(fs.readFileSync("./config.json", "utf8"));
 //create webserver
 const app = express();
 
-//call twitch title
-const res = await axios.get(config.twitch_status);
-let data_title = res.data;
-console.log(res.data);
+//Call for twitch title
+const stats = await axios.get(config.twitch_status);
+let data_title = stats.data;
+console.log(stats.data);
+
+//Call for twitch category/game
+const category = await axios.get(config.twitch_category);
+let data_category = category.data;
+console.log(category.data);
+
+//Call for twitch view count (at the time of posting)
+const viewer = await axios.get(config.twitch_viewers);
+let data_viewers = viewer.data;
+console.log(viewer.data);
+
+//Call for twitch follower count
+const follow = await axios.get(config.twitch_follow);
+let data_follow = follow.data;
+console.log(follow.data);
 
 //create webhook
 const hook = new Webhook(config.webhook_URL);
@@ -23,15 +38,21 @@ app.get("/stream/start", async (req, res) => {
 
   if (config.use_embed) {
     const embed = new MessageBuilder();
+    //Non-embed text with premade message and title
+    embed.setText(config.non_embed_text + data_title);
+    //embedded text title with hyperlink
     embed.setTitle(data_title);
+    embed.setURL(config.twitch_url);
+    //embed accent color
     embed.setColor(config.embed_config.color);
-    embed.setDescription(config.embed_config.description);
+    //embed.setDescription(config.embed_config.description);
+    //description with twitch category data
+    embed.setDescription("Category: " + data_category);
+    embed.addField("Viewers: ", data_viewers);
+    embed.addField("Followers: ", data_follow);
     embed.setImage(config.embed_config.image);
     if (config.embed_config.show_timestamp) embed.setTimestamp();
-    if (config.non_embed_text !== "") await hook.send(config.non_embed_text);
-    await hook.send(embed);
-  } else {
-    await hook.send(config.non_embed_text);
+    hook.send(embed);
   }
 
   return res.json({

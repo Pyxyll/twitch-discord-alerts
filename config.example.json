@@ -7,6 +7,10 @@
     "use_embed": true,
 
     "twitch_status": "https://decapi.me/twitch/status/YourChannelName",
+    "twitch_category": "https://decapi.me/twitch/game/YourChannelName",
+    "twitch_viewers": "https://decapi.me/twitch/viewercount/YourChannelName",
+    "twitch_follow": "https://decapi.me/twitch/followcount/YourChannelName",
+    "twitch_url": "https://www.twitch.tv/YourChannelName",
 
     "non_embed_text": "@everyone",
 
